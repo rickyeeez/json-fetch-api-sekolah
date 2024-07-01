@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Sekolah</title>
+    <style>
+      table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+    </style>
+    <script>
+      function generateData() {
+        fetch("Data Sekolah.json")
+          .then((res) => res.json())
+          .then((json) => {
+            console.log(json);
+            const mountains = json.dataSekolah;
+            let table = document.querySelector("table");
+            let data = Object.keys(mountains[0]);
+            generateTable(table, mountains);
+            generateTableHead(table, data);
+          });
+      }
+
+      function generateTableHead(table, data) {
+        let thead = table.createTHead();
+        let row = thead.insertRow();
+        for (let key of data) {
+          let th = document.createElement("th");
+          let text = document.createTextNode(key);
+          th.appendChild(text);
+          row.appendChild(th);
+        }
+      }
+
+      function generateTable(table, data) {
+        for (let element of data) {
+          let row = table.insertRow();
+          for (key in element) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(element[key]);
+            cell.appendChild(text);
+          }
+        }
+      }
+
+      generateData();
+    </script>
+  </head>
+  <body>
+    <div class="">
+      <table></table>
+    </div>
+  </body>
+</html>
